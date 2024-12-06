@@ -1,5 +1,6 @@
 Spaceship player = new Spaceship();
 Star[] stars = new Star[200];
+ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 boolean wIsPressed = false;
 boolean aIsPressed = false;
 boolean dIsPressed = false;
@@ -11,12 +12,24 @@ public void setup()
   for(int i = 0; i<stars.length; i++){
     stars[i] = new Star();
   }
+  for(int i = 0; i<5; i++){
+    asteroids.add(new Asteroid());
+  }
 }
 public void draw() 
 {
   background(0);
   for(int i = 0; i<stars.length; i++){
     stars[i].show();
+  }
+  for(int i = 0; i<asteroids.size(); i++){
+    asteroids.get(i).move();
+    asteroids.get(i).show();
+    float distance = dist((float)player.getCenterX(), (float)player.getCenterY(), (float)asteroids.get(i).getCenterX(), (float)asteroids.get(i).getCenterY());
+    if(distance < 20){
+      asteroids.remove(i);
+      i--;
+    }
   }
   if(wIsPressed == true){
     player.accelerate(0.1);
