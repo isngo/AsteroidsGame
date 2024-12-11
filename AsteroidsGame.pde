@@ -1,6 +1,7 @@
 Spaceship player = new Spaceship();
 Star[] stars = new Star[200];
 ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 boolean wIsPressed = false;
 boolean aIsPressed = false;
 boolean dIsPressed = false;
@@ -25,10 +26,32 @@ public void draw()
   for(int i = 0; i<asteroids.size(); i++){
     asteroids.get(i).move();
     asteroids.get(i).show();
-    float distance = dist((float)player.getCenterX(), (float)player.getCenterY(), (float)asteroids.get(i).getCenterX(), (float)asteroids.get(i).getCenterY());
-    if(distance < 20){
+    float padistance = dist((float)player.getCenterX(), (float)player.getCenterY(), (float)asteroids.get(i).getCenterX(), (float)asteroids.get(i).getCenterY());
+    if(padistance < 20){
       asteroids.remove(i);
       i--;
+    }
+  }
+  for(int i = 0; i<bullets.size(); i++){
+    bullets.get(i).move();
+    bullets.get(i).show();
+    if(bullets.get(i).getCenterX()<1 || bullets.get(i).getCenterX()>499){
+      bullets.remove(i);
+      i--;
+      break;
+    }
+    if(bullets.get(i).getCenterY()<1 || bullets.get(i).getCenterY()>499){
+      bullets.remove(i);
+      i--;
+      break;
+    }
+    for(int k = 0; k<asteroids.size(); k++){
+      float abdistance = dist((float)asteroids.get(k).getCenterX(), (float)asteroids.get(k).getCenterY(), (float)bullets.get(i).getCenterX(), (float)bullets.get(i).getCenterY());
+      if (abdistance < 20){
+        bullets.remove(i);
+        asteroids.remove(k);
+        break;
+      }
     }
   }
   if(wIsPressed == true){
@@ -59,6 +82,9 @@ public void keyPressed()
   }
   if(key == 'h'){
     hIsPressed = true;
+  }
+  if(key == ' '){
+   bullets.add(new Bullet(player));
   }
 }
 public void keyReleased()
