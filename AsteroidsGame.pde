@@ -20,9 +20,9 @@ public void setup()
 public void draw() 
 {
   background(0);
-  for(int i = 0; i<stars.length; i++){
-    stars[i].show();
-  }
+  //for(int i = 0; i<stars.length; i++){
+    //stars[i].show();
+  //}
   for(int i = 0; i<asteroids.size(); i++){
     asteroids.get(i).move();
     asteroids.get(i).show();
@@ -31,6 +31,9 @@ public void draw()
       asteroids.remove(i);
       i--;
     }
+  }
+  for(int i = 0; i<stars.length; i++){
+    stars[i].show();
   }
   for(int i = 0; i<bullets.size(); i++){
     bullets.get(i).move();
