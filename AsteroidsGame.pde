@@ -50,6 +50,8 @@ public void draw()
       if (abdistance < 20){
         bullets.remove(i);
         asteroids.remove(k);
+        i--;
+        k--;
         break;
       }
     }
